@@ -196,7 +196,17 @@ document.addEventListener('DOMContentLoaded', () => {
         <img src="https://i.pinimg.com/736x/fd/11/42/fd1142f40a8eee585a2cb36b94569f3e.jpg" alt="Shop decoration 2" class="shop-decoration" style="margin-top: 20px;">
         <img src="https://i.pinimg.com/736x/67/b4/ae/67b4aeda3d7503ec2f749ffa12608a2c.jpg" alt="Shop decoration 3" class="shop-decoration" style="margin-top: 20px;">
         <img src="https://i.pinimg.com/736x/10/5a/a2/105aa216193627fb6443d2babc457fe4.jpg" alt="Shop decoration 4" class="shop-decoration" style="margin-top: 20px;">
+        <img src="https://i.pinimg.com/736x/ef/3e/f6/ef3ef67da030a98f7fa7f7aee19c2bbf.jpg" alt="Shop decoration 4" class="shop-decoration" style="margin-top: 20px;">
     `);
+
+    // Render Footer section with Contact Us 
+    document.getElementById('footer').innerHTML = `
+        <div class="contact-us">
+            <h4>Contact Us</h4>
+            <p>Phone: +254 114 148 875</p>
+            <p>Email: <a href="mailto:ebrahimmuznah98@gmail.com">ebrahimmuznah98@gmail.com</a></p>
+        </div>
+    `;
 
     // Event listener for favorite heart clicks
     document.addEventListener('click', (e) => {
