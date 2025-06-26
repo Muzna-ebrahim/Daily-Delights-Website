@@ -183,7 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <div id="favorite"></div>
     `);
 
-    // Render Shop section
+    // Render Shop section with decoration image
     fetchAndRender('http://localhost:3000/shop', 'shop', data => `
         <h2>Discover Our Kitchen Goodies</h2>
         <p>${data[0].description}</p>
@@ -192,6 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <li><strong>${item.name}</strong> - $${item.price}<p>${item.description}</p></li>
             `).join('')}
         </ul>
+        <img src="https://i.pinimg.com/736x/0f/64/8a/0f648a264b8179e13a7c6ff540da4e4f.jpg" alt="Shop decoration" class="shop-decoration">
     `);
 
     // Event listener for favorite heart clicks
