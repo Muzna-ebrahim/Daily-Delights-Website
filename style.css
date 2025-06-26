@@ -1,0 +1,412 @@
+/* Reset default margins and padding for consistency */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body styling for global dark mode */
+body {
+    background-color: #fff;
+    color: #333;
+    transition: background-color 0.3s, color 0.3s;
+    display: flex;
+    min-height: 100vh;
+    flex-wrap: wrap;
+}
+
+.dark-mode body {
+    background-color: #333;
+    color: #fff;
+}
+
+/* Header styling */
+.header_container {
+    background-color: #4CAF50;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s;
+    width: 100%;
+}
+
+.dark-mode .header_container {
+    background-color: #2E7D32;
+}
+
+h1 {
+    margin: 0;
+    color: white;
+    font-family: 'Arial', sans-serif;
+    font-size: 24px;
+    padding-left: 20px;
+}
+
+/* Navigation styling */
+nav {
+    background-color: transparent;
+    padding: 10px;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+nav ul li {
+    position: relative;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-family: 'Arial', sans-serif;
+    font-size: 16px;
+    padding: 5px 10px;
+    display: block;
+    transition: background-color 0.3s;
+}
+
+nav ul li a:hover {
+    background-color: #388E3C;
+    border-radius: 5px;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1001;
+    border-radius: 5px;
+}
+
+.dark-mode .dropdown-content {
+    background-color: #444;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    display: block;
+    text-align: left;
+}
+
+.dark-mode .dropdown-content a {
+    color: white;
+}
+
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+
+.dark-mode .dropdown-content a:hover {
+    background-color: #555;
+}
+
+/* Main section styling (left side) */
+main {
+    padding: 20px;
+    flex: 1 1 65%; /* More space for left content */
+}
+
+section {
+    margin: 20px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+    animation: fadeIn 0.5s ease-in;
+}
+
+.dark-mode section {
+    border-color: #666;
+    background-color: #444;
+}
+
+/* Learning content styling */
+.learning-content {
+    background-color: #f0f0f0;
+    padding: 15px;
+    margin-top: 10px;
+    border-radius: 5px;
+}
+
+.dark-mode .learning-content {
+    background-color: #555;
+}
+
+.learning-content h3 {
+    color: #4CAF50;
+    margin-bottom: 10px;
+}
+
+.dark-mode .learning-content h3 {
+    color: #81C784;
+}
+
+.learning-content ul {
+    list-style-type: disc;
+    margin-left: 20px;
+    margin-top: 10px;
+}
+
+.learning-content a {
+    color: #388E3C;
+    text-decoration: none;
+}
+
+.dark-mode .learning-content a {
+    color: #A5D6A7;
+}
+
+.learning-content a:hover {
+    text-decoration: underline;
+}
+
+/* Recipe styling (right side) */
+#categories {
+    flex: 1 1 35%; /* Right side for categories and controls */
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.dark-mode #categories {
+    background-color: #444;
+}
+
+.recipe {
+    margin: 20px 0;
+    padding: 15px;
+    background-color: #fff;
+    border-radius: 5px;
+    text-align: center;
+    position: relative;
+}
+
+.dark-mode .recipe {
+    background-color: #333;
+}
+
+.recipe h4 {
+    color: #4CAF50;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.dark-mode .recipe h4 {
+    color: #81C784;
+}
+
+.recipe h5 {
+    font-size: 1.1em;
+    margin-top: 10px;
+    color: #333;
+}
+
+.dark-mode .recipe h5 {
+    color: #bbb;
+}
+
+.recipe ul, .recipe ol {
+    margin-left: 20px;
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+.recipe li {
+    margin: 5px 0;
+}
+
+.recipe p strong {
+    color: #388E3C;
+}
+
+.dark-mode .recipe p strong {
+    color: #A5D6A7;
+}
+
+/* Favorite heart styling */
+.favorite-heart {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    transition: color 0.3s;
+    cursor: pointer;
+}
+
+.dark-mode .favorite-heart {
+    color: #fff;
+}
+
+/* Favorite title styling */
+.favorite-title {
+    margin: 10px 0;
+    padding: 5px 10px;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    display: inline-block;
+}
+
+.dark-mode .favorite-title {
+    background-color: #555;
+}
+
+.favorite-title a {
+    color: #388E3C;
+    text-decoration: none;
+    font-family: 'Arial', sans-serif;
+    font-size: 16px;
+}
+
+.dark-mode .favorite-title a {
+    color: #A5D6A7;
+}
+
+.favorite-title a:hover {
+    text-decoration: underline;
+}
+
+/* Shop styling */
+#shop ul {
+    list-style: none;
+    margin-top: 10px;
+}
+
+#shop li {
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+}
+
+.dark-mode #shop li {
+    background-color: #555;
+}
+
+/* Foodish and control styling within categories */
+.foodish-image {
+    max-width: 80%;
+    height: auto;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#refresh-foodish {
+    padding: 8px 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+}
+
+#refresh-foodish:hover {
+    background-color: #388E3C;
+}
+
+.dark-mode #refresh-foodish {
+    background-color: #2E7D32;
+}
+
+.dark-mode #refresh-foodish:hover {
+    background-color: #1B5E20;
+}
+
+#recipeSearch {
+    padding: 8px;
+    margin: 10px 0;
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.dark-mode #recipeSearch {
+    background-color: #555;
+    border-color: #666;
+    color: #fff;
+}
+
+#darkMode {
+    padding: 8px 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+}
+
+#darkMode:hover {
+    background-color: #388E3C;
+}
+
+.dark-mode #darkMode {
+    background-color: #2E7D32;
+}
+
+.dark-mode #darkMode:hover {
+    background-color: #1B5E20;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+    body {
+        flex-direction: column;
+    }
+    .header_container {
+        flex-direction: column;
+        text-align: center;
+    }
+    h1 {
+        padding-left: 0;
+        margin-bottom: 10px;
+    }
+    nav ul {
+        flex-direction: column;
+        align-items: center;
+    }
+    nav ul li {
+        width: 100%;
+        text-align: center;
+    }
+    .dropdown-content {
+        position: static;
+        width: 100%;
+        box-shadow: none;
+    }
+    main {
+        flex: 1 1 100%;
+    }
+    #categories {
+        flex: 1 1 100%;
+        min-height: auto;
+        margin: 10px 0;
+    }
+}
+
+/* Animation for polish */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
