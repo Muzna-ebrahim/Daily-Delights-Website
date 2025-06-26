@@ -144,6 +144,7 @@ section {
     background-color: #fff;
     animation: fadeIn 0.5s ease-in;
     color: #333; /* Default text color */
+    position: relative; /* For height reference */
 }
 
 .dark-mode section {
@@ -406,8 +407,10 @@ h2, h4 {
 
 /* Shop decoration image styling */
 .shop-decoration {
-    width: 200px; /* Small size as requested */
-    height: auto;
+    width: 100%; /* Full width of the section */
+    height: 50%; /* Half the height of the section */
+    max-height: 300px; /* Cap to prevent excessive growth */
+    object-fit: cover; /* Maintain aspect ratio */
     border: 2px solid #4CAF50; /* Border */
     border-radius: 5px;
     margin: 20px auto; /* Center and add space */
@@ -418,7 +421,59 @@ h2, h4 {
     border-color: #81c784; /* Visible border in dark mode */
 }
 
-/* Responsive design */
+/* Footer styling*/
+#footer {
+    background-color: white;
+    color: black;
+    text-align: center;
+    padding: 50px 0;
+    margin: 0 auto;
+    width: 250px;
+    font-family: 'Arial', sans-serif;
+    font-size: 14px;
+    border: none; 
+    background-image: none; 
+}
+
+.dark-mode #footer {
+    background-color: white; 
+    color: black;
+}
+
+#footer .contact-us {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+}
+
+#footer .contact-us h4 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+#footer .contact-us p {
+    margin: 5px 0;
+    color: #0a0a0a;
+}
+
+.dark-mode #footer .contact-us p {
+    color: black;
+}
+
+#footer .contact-us a {
+    color: black;
+    text-decoration: none;
+}
+
+.dark-mode #footer .contact-us  h4 {
+    color: rgb(36, 131, 36);
+}
+
+#footer .contact-us a:hover {
+    text-decoration: underline;
+}
+
 @media (max-width: 600px) {
     body {
         flex-direction: column;
@@ -453,8 +508,11 @@ h2, h4 {
         margin: 10px 0;
     }
     .shop-decoration {
-        width: 150px; /* Slightly smaller on mobile */
-        margin: 10px auto;
+        height: 40%; /* Slightly less on mobile for balance */
+        max-height: 200px; /* Adjusted cap for mobile */
+    }
+    #footer {
+        padding: 15px 0;
     }
 }
 
