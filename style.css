@@ -15,9 +15,17 @@ body {
     flex-wrap: wrap;
 }
 
-.dark-mode body {
-    background-color: #333;
-    color: #fff;
+.dark-mode {
+    background-color: #1a1a1a; /* Darker background for whole page */
+    color: #e0e0e0; /* Light text for visibility */
+}
+
+.dark-mode a {
+    color: #a5d6a7; /* Ensure links are visible */
+}
+
+.dark-mode a:hover {
+    color: #81c784;
 }
 
 /* Header styling */
@@ -39,12 +47,18 @@ body {
     background-color: #2E7D32;
 }
 
-h1 {
+.header_container h1 {
     margin: 0;
     color: white;
-    font-family: 'Arial', sans-serif;
-    font-size: 24px;
+    font-family: 'Great Vibes', cursive; /* Cursive font */
+    font-size: 36px; /* Larger size */
+    font-weight: bold; /* Bold */
+    text-decoration: underline; /* Underlined */
     padding-left: 20px;
+}
+
+.dark-mode .header_container h1 {
+    color: #e0e0e0; /* Visible in dark mode */
 }
 
 /* Navigation styling */
@@ -90,7 +104,8 @@ nav ul li a:hover {
 }
 
 .dark-mode .dropdown-content {
-    background-color: #444;
+    background-color: #333;
+    color: #e0e0e0;
 }
 
 .dropdown:hover .dropdown-content {
@@ -105,7 +120,7 @@ nav ul li a:hover {
 }
 
 .dark-mode .dropdown-content a {
-    color: white;
+    color: #e0e0e0;
 }
 
 .dropdown-content a:hover {
@@ -113,7 +128,7 @@ nav ul li a:hover {
 }
 
 .dark-mode .dropdown-content a:hover {
-    background-color: #555;
+    background-color: #444;
 }
 
 /* Main section styling (left side) */
@@ -128,11 +143,13 @@ section {
     border-radius: 5px;
     background-color: #fff;
     animation: fadeIn 0.5s ease-in;
+    color: #333; /* Default text color */
 }
 
 .dark-mode section {
-    border-color: #666;
-    background-color: #444;
+    border-color: #444;
+    background-color: #2a2a2a;
+    color: #e0e0e0; /* Visible text in dark mode */
 }
 
 /* Learning content styling */
@@ -144,7 +161,7 @@ section {
 }
 
 .dark-mode .learning-content {
-    background-color: #555;
+    background-color: #333;
 }
 
 .learning-content h3 {
@@ -153,7 +170,7 @@ section {
 }
 
 .dark-mode .learning-content h3 {
-    color: #81C784;
+    color: #81c784;
 }
 
 .learning-content ul {
@@ -168,11 +185,23 @@ section {
 }
 
 .dark-mode .learning-content a {
-    color: #A5D6A7;
+    color: #a5d6a7;
 }
 
 .learning-content a:hover {
     text-decoration: underline;
+}
+
+/* Recipe and category title styling */
+h2, h4 {
+    font-family: 'Times New Roman', Times, serif; /* Times New Roman font */
+    font-weight: bold; /* Bold */
+    text-decoration: underline; /* Underlined */
+    margin-bottom: 10px; /* Space from description */
+}
+
+.dark-mode h2, .dark-mode h4 {
+    color: #e0e0e0; /* Visible in dark mode */
 }
 
 /* Recipe styling (right side) */
@@ -187,7 +216,8 @@ section {
 }
 
 .dark-mode #categories {
-    background-color: #444;
+    background-color: #2a2a2a;
+    color: #e0e0e0; /* Visible text */
 }
 
 .recipe {
@@ -197,10 +227,12 @@ section {
     border-radius: 5px;
     text-align: center;
     position: relative;
+    display: block; /* Ensure recipes don't collapse */
 }
 
 .dark-mode .recipe {
     background-color: #333;
+    color: #e0e0e0; /* Visible text */
 }
 
 .recipe h4 {
@@ -210,7 +242,7 @@ section {
 }
 
 .dark-mode .recipe h4 {
-    color: #81C784;
+    color: #81c784;
 }
 
 .recipe h5 {
@@ -238,7 +270,7 @@ section {
 }
 
 .dark-mode .recipe p strong {
-    color: #A5D6A7;
+    color: #a5d6a7;
 }
 
 /* Favorite heart styling */
@@ -251,7 +283,7 @@ section {
 }
 
 .dark-mode .favorite-heart {
-    color: #fff;
+    color: #e0e0e0;
 }
 
 /* Favorite title styling */
@@ -264,7 +296,8 @@ section {
 }
 
 .dark-mode .favorite-title {
-    background-color: #555;
+    background-color: #444;
+    color: #e0e0e0;
 }
 
 .favorite-title a {
@@ -275,7 +308,7 @@ section {
 }
 
 .dark-mode .favorite-title a {
-    color: #A5D6A7;
+    color: #a5d6a7;
 }
 
 .favorite-title a:hover {
@@ -296,7 +329,8 @@ section {
 }
 
 .dark-mode #shop li {
-    background-color: #555;
+    background-color: #333;
+    color: #e0e0e0;
 }
 
 /* Foodish and control styling within categories */
@@ -338,12 +372,13 @@ section {
     border: 1px solid #ddd;
     border-radius: 5px;
     font-size: 14px;
+    color: #333;
 }
 
 .dark-mode #recipeSearch {
-    background-color: #555;
+    background-color: #444;
     border-color: #666;
-    color: #fff;
+    color: #e0e0e0;
 }
 
 #darkMode {
@@ -367,6 +402,20 @@ section {
 
 .dark-mode #darkMode:hover {
     background-color: #1B5E20;
+}
+
+/* Shop decoration image styling */
+.shop-decoration {
+    width: 200px; /* Small size as requested */
+    height: auto;
+    border: 2px solid #4CAF50; /* Border */
+    border-radius: 5px;
+    margin: 20px auto; /* Center and add space */
+    display: block;
+}
+
+.dark-mode .shop-decoration {
+    border-color: #81c784; /* Visible border in dark mode */
 }
 
 /* Responsive design */
@@ -402,6 +451,10 @@ section {
         flex: 1 1 100%;
         min-height: auto;
         margin: 10px 0;
+    }
+    .shop-decoration {
+        width: 150px; /* Slightly smaller on mobile */
+        margin: 10px auto;
     }
 }
 
