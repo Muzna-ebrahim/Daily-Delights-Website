@@ -2,7 +2,7 @@
   "about": [
     {
       "id": 1,
-      "title": "Our Story: Crafting Daily Delights",
+      "title": "Our Story: Crafting Daily Delights:",
       "content": "My journey began with the joy of fulfilling orders, cooking hearty meals and baking treats with care for those who trusted my hands. Daily Delights is my heartfelt tribute, a legacy of love baked into every recipe, inviting you to taste the passion behind each bite."
     }
   ],
@@ -10,19 +10,19 @@
     {
       "id": 1,
       "section": "basics",
-      "title": "Seasoning Secrets Unveiled",
+      "title": "Seasoning Secrets Unveiled:",
       "content": "Unlock the true power of flavor. This section reveals the art of seasoning, showing you how to perfectly balance and layer spices, herbs, and salts. Transform your dishes from good to extraordinary with simple, intentional additions."
     },
     {
       "id": 2,
       "section": "baking",
-      "title": "Baking with Alternative Flours",
+      "title": "Baking with Alternative Flours:",
       "content": "Step into a versatile world of baking beyond traditional grains! Here at Daily Delights, we demystify baking with alternative flours, guiding you through the unique properties of options like almond, oat, and coconut flour. Learn how to adapt recipes, achieve perfect textures, and infuse your baked goods with exciting new flavors, opening up a whole new realm of delicious possibilities for your kitchen."
     },
     {
       "id": 3,
       "section": "tips",
-      "title": "Quick Meal Prep Tricks",
+      "title": "Quick Meal Prep Tricks:",
       "content": "Transform your cooking routine and reclaim your precious time with Daily Delights' clever meal prep tricks! Discover smart strategies for efficient chopping, batch cooking, and savvy storage that will streamline your kitchen work. Learn how simple planning can lead to stress-free weeknights, ensuring you always have delicious, homemade meals ready when hunger strikes. Get ready to revolutionize your approach to everyday eating!"
     }
   ],
@@ -30,14 +30,14 @@
     {
       "id": 1,
       "category": "cakes-cookies",
-      "title": "Delightful Dessert Creations",
+      "title": "Delightful Dessert Creations:",
       "description": "Unleash your inner pastry chef with delightful dessert creations, featuring easy recipes for cakes, cookies, and more to sweeten your daily life.",
       "recipes": [
         {
           "id": 1,
           "title": "Chocolate Chip Cookie Bliss",
           "description": "A classic, gooey cookie packed with chocolate chips—perfect for a sweet treat any time of day!",
-          "image": "images/BAKERY-STYLE-CHOCOLATE-CHIP-COOKIES-9-637x637-1.jpg",
+          "image": "assets/db03e53c057449564a8c3f285d4ae705.jpg",
           "ingredients": [
             "1 cup all-purpose flour",
             "1/2 cup butter, softened",
@@ -68,10 +68,10 @@
       "description": "Master the art of bread-making with artisan bread delights, featuring rustic recipes and simple techniques to fill your home with warm, delicious aromas.",
       "recipes": [
         {
-          "id": 1,
+          "id": 2,
           "title": "Classic Artisan Bread",
           "description": "A crusty, flavorful loaf perfect for any meal, baked with love and simple ingredients.",
-          "image": "images/download.jpeg",
+          "image": "assets/6c2cfe421f4bf3490f2e8c127bc3237d.jpg",
           "ingredients": [
             "3 cups all-purpose flour",
             "1 1/2 cups water",
@@ -99,10 +99,10 @@
       "description": "Elevate your dinner table with our standout main meal recipes, bursting with bold flavors and simple preparation tips to make every bite a delight.",
       "recipes": [
         {
-          "id": 1,
+          "id": 3,
           "title": "Chicken Stir-Fry Delight",
           "description": "A quick and colorful main meal packed with tender chicken, crisp vegetables, and a savory sauce—perfect for a weeknight win!",
-          "image": "images/chicken-stir-fry-index-65130392700bf.avif",
+          "image": "assets/713a2fbcbccd3bf592ae096dba62544f.jpg",
           "ingredients": [
             "2 boneless chicken breasts, sliced",
             "1 cup broccoli florets",
@@ -135,7 +135,7 @@
       "content": "Curate your perfect cookbook with recipes that reflect your journey, blending my love for crafting meals and baked goods into a personalized treasure trove of daily delights."
     },
     {
-      "id": 3,
+      "id": 2,
       "section": "favorite",
       "title": "Cherished Family Favorites",
       "content": "Discover cherished family favorites, a collection of beloved recipes passed down and perfected through my years of cooking and baking for those I love, now shared with you."
@@ -156,7 +156,7 @@
         {
           "id": 2,
           "name": "Organic Spices Set",
-          "price": 12.50,
+          "price": 12.5,
           "description": "A set of organic spices to enhance your dishes."
         },
         {
@@ -166,6 +166,23 @@
           "description": "Perfect for artisan bread and dough recipes."
         }
       ]
+    }
+  ],
+  "favorites": [
+    {
+      "id": 1,
+      "title": "Chocolate Chip Cookie Bliss",
+      "category": "cakes-cookies"
+    },
+    {
+      "id": 2,
+      "title": "Classic Artisan Bread",
+      "category": "bread"
+    },
+    {
+      "id": 3,
+      "title": "Chicken Stir-Fry Delight",
+      "category": "main-meals"
     }
   ]
 }

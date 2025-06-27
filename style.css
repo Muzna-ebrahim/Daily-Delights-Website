@@ -7,7 +7,7 @@
 
 /* Body styling for global layout with gradient background */
 body {
-    background: linear-gradient(135deg, #f5e8c7, #e0e0e0); /* Subtle gradient background */
+    background: linear-gradient(135deg, #f5e8c7, #e0e0e0);
     position: relative;
     color: #333;
     transition: background 0.3s, color 0.3s;
@@ -17,20 +17,8 @@ body {
     align-items: center;
 }
 
-/* Overlay for depth (optional) */
-body::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.1); /* Very light overlay */
-    z-index: -1;
-}
-
 .dark-mode {
-    background: linear-gradient(135deg, #2a2a2a, #404040); /* Dark mode gradient */
+    background: linear-gradient(135deg, #2a2a2a, #404040);
     color: #e0e0e0;
 }
 
@@ -168,7 +156,7 @@ section {
     max-width: 1000px;
     width: 100%;
     padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Card-like shadow */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .dark-mode section {
@@ -177,7 +165,7 @@ section {
     color: #e0e0e0;
 }
 
-/* Categories styling */
+/* Categories and recipe styling */
 #categories {
     width: 100%;
     max-width: 1200px;
@@ -203,7 +191,7 @@ section {
     display: block;
     max-width: 900px;
     width: 100%;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Card effect */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .dark-mode .recipe {
@@ -212,19 +200,26 @@ section {
 }
 
 .recipe h4 {
-    color: #388E3C; /* Eye-catching green for titles */
-    margin-bottom: 15px; /* Increased spacing after title */
+    color: #388E3C;
+    margin-bottom: 15px;
 }
 
 .dark-mode .recipe h4 {
-    color: #81c784; /* Adjusted for dark mode */
+    color: #81c784;
+}
+
+.recipe-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin-bottom: 15px;
 }
 
 .recipe h5 {
     font-size: 1.1em;
-    margin: 15px 0 10px; /* Spacing before and after headings */
+    margin: 15px 0 10px;
     color: #333;
-    text-align: left; /* Align headings to left */
+    text-align: left;
 }
 
 .dark-mode .recipe h5 {
@@ -232,8 +227,8 @@ section {
 }
 
 .recipe ul, .recipe ol {
-    margin: 0 0 15px 20px; /* Left-aligned list with spacing */
-    text-align: left; /* Align list items to left */
+    margin: 0 0 15px 20px;
+    text-align: left;
 }
 
 .recipe li {
@@ -241,8 +236,8 @@ section {
 }
 
 .recipe p {
-    margin: 10px 0; /* Spacing after paragraphs */
-    text-align: left; /* Align paragraphs to left */
+    margin: 10px 0;
+    text-align: left;
 }
 
 .recipe p strong {
@@ -454,17 +449,21 @@ section {
     color: #ffffff;
     text-decoration: none;
 }
+
 .footer-section a:hover {
     color: #4CAF50;
     text-decoration: underline;
 }
+
 .sitemap ul {
     list-style: none;
     padding: 0;
 }
+
 .sitemap li {
     margin: 10px 0;
 }
+
 .social-icons {
     margin-top: 10px;
 }
@@ -485,19 +484,7 @@ section {
     color: #bbbbbb;
     margin-top: 15px;
 }
-/* Responsive design */
-@media (max-width: 600px) {
-    .footer-container {
-        flex-direction: column;
-        align-items: center;
-    }
-    .footer-section {
-        margin: 15px 0;
-    }
-    .social-icons a {
-        margin: 0 5px;
-    }
-}
+
 /* Responsive design */
 @media (max-width: 600px) {
     body {
@@ -531,6 +518,16 @@ section {
     #footer {
         padding: 15px 0;
         width: 100%;
+    }
+    .footer-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    .footer-section {
+        margin: 15px 0;
+    }
+    .social-icons a {
+        margin: 0 5px;
     }
 }
 

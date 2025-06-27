@@ -1,4 +1,5 @@
-function fetchAndRender(url, sectionId, template) {
+// Reusable function to fetch and render data
+function fetchAndRender(url, sectionId, template, callback = () => {}) {
     fetch(url)
         .then(response => {
             if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
@@ -8,11 +9,12 @@ function fetchAndRender(url, sectionId, template) {
             const section = document.getElementById(sectionId);
             if (section) {
                 section.innerHTML = template(data);
+                callback(); // Execute callback after rendering
             } else {
                 console.error(`Section with ID ${sectionId} not found`);
             }
         })
-        .catch(error => console.error(`Error fetching ${sectionId} data:`, error));
+        .catch(error => console.error(`Error fetching ${sectionId} data:`, error.message));
 }
 
 // Fetch random image from Foodish API
@@ -20,19 +22,21 @@ async function fetchFoodishImage() {
     try {
         const response = await fetch('https://foodish-api.com/api/');
         const data = await response.json();
-        return data.image; // Returns URL like https://foodish-api.com/images/pizza/pizza1.jpg
+        return data.image;
     } catch (error) {
         console.error('Foodish API fetch failed:', error);
-        return 'images/placeholder.jpg'; // Fallback image
+        return 'images/placeholder.jpg';
     }
 }
 
-// Track favorite recipe IDs locally (sync with json-server)
+// Track favorite recipe IDs locally
 let favorites = new Set();
 
 // Fetch initial data and render categories with Foodish
 async function fetchInitialData() {
-    const categoriesData = await fetch('http://localhost:3000/categories').then(res => res.json()).catch(() => []);
+    const categoriesData = await fetch('http://localhost:3000/categories')
+        .then(res => res.json())
+        .catch(() => []);
     const imageUrl = await fetchFoodishImage();
     const categoriesSection = document.getElementById('categories');
     if (categoriesSection) {
@@ -49,9 +53,10 @@ async function fetchInitialData() {
                     <h4>${category.title}</h4>
                     <p>${category.description}</p>
                     ${category.recipes.map(recipe => `
-                        <div class="recipe" style="display: block;">
+                        <div class="recipe">
                             <h4>${recipe.title}</h4>
                             <p>${recipe.description}</p>
+                            <img src="${recipe.image || 'images/placeholder.jpg'}" alt="${recipe.title}" class="recipe-image">
                             <h5>Ingredients</h5>
                             <ul>${recipe.ingredients.map(ingredient => `<li>${ingredient}</li>`).join('')}</ul>
                             <h5>Instructions</h5>
@@ -66,23 +71,20 @@ async function fetchInitialData() {
             <input type="text" id="recipeSearch" placeholder="Search recipes...">
             <button id="darkMode">Toggle Dark Mode</button>
         ` : '<p>No categories data available. Check the server.</p>';
+
+        // Attach event listeners
+        document.getElementById('refresh-foodish')?.addEventListener('click', async () => {
+            const imageUrl = await fetchFoodishImage();
+            document.querySelector('#foodish-content img').src = imageUrl;
+        });
+        document.getElementById('darkMode')?.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+        });
+        document.getElementById('recipeSearch')?.addEventListener('input', filterRecipes);
     } else {
         console.error('Categories section not found');
     }
 
-    // Attach event listeners after rendering
-    const darkModeButton = document.getElementById('darkMode');
-    if (darkModeButton) {
-        darkModeButton.addEventListener('click', toggleDarkMode);
-    }
-    function toggleDarkMode() {
-        document.body.classList.toggle('dark-mode');
-    }
-
-    const searchInput = document.getElementById('recipeSearch');
-    if (searchInput) {
-        searchInput.addEventListener('input', filterRecipes);
-    }
     function filterRecipes(e) {
         const searchTerm = e.target.value.toLowerCase();
         const recipes = document.querySelectorAll('.recipe');
@@ -91,76 +93,59 @@ async function fetchInitialData() {
             recipe.style.display = searchTerm ? (title.includes(searchTerm) ? 'block' : 'none') : 'block';
         });
     }
-
-    const refreshButton = document.getElementById('refresh-foodish');
-    if (refreshButton) {
-        refreshButton.addEventListener('click', async () => {
-            const imageUrl = await fetchFoodishImage();
-            document.querySelector('#foodish-content img').src = imageUrl;
-        });
-    }
 }
 
 // Toggle favorite status and sync with json-server
-function toggleFavorite(recipeId, recipeTitle, category) {
+async function toggleFavorite(recipeId, recipeTitle, category) {
     const isFavorite = favorites.has(recipeId);
-    console.log('Toggling favorite:', { recipeId, recipeTitle, category, isFavorite }); // Debug log
-    if (isFavorite) {
-        favorites.delete(recipeId);
-        fetch(`http://localhost:3000/favorites/${recipeId}`, {
-            method: 'DELETE',
-        })
-        .then(() => console.log('Favorite deleted:', recipeId))
-        .catch(error => console.error('Delete favorite failed:', error));
-    } else {
-        favorites.add(recipeId);
-        fetch('http://localhost:3000/favorites', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ id: recipeId, title: recipeTitle, category: category }),
-        })
-        .then(response => {
+    console.log('Toggling favorite:', { recipeId, recipeTitle, category, isFavorite });
+    try {
+        if (isFavorite) {
+            favorites.delete(recipeId);
+            const response = await fetch(`http://localhost:3000/favorites/${recipeId}`, { method: 'DELETE' });
+            if (!response.ok) throw new Error('Delete failed');
+            console.log('Favorite deleted:', recipeId);
+        } else {
+            favorites.add(recipeId);
+            const response = await fetch('http://localhost:3000/favorites', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id: recipeId, title: recipeTitle, category: category }),
+            });
+            if (!response.ok) throw new Error('Add failed');
             console.log('Favorite added:', { recipeId, recipeTitle, category });
-            return response.json();
-        })
-        .catch(error => console.error('Add favorite failed:', error));
+        }
+        renderFavorites();
+    } catch (error) {
+        console.error('Favorite operation failed:', error.message);
     }
-    renderFavorites();
     const heart = document.querySelector(`.favorite-heart[data-recipe-id="${recipeId}"]`);
-    if (heart) {
-        heart.style.color = !isFavorite ? 'red' : 'black';
-    }
+    if (heart) heart.style.color = !isFavorite ? 'red' : 'black';
 }
 
 // Render favorites in cookbook
-function renderFavorites() {
-    fetch('http://localhost:3000/favorites')
-        .then(response => {
-            if (!response.ok) throw new Error('Network response was not ok');
-            return response.json();
-        })
-        .then(data => {
-            console.log('Favorites data:', data); // Debug log
-            const favoriteDiv = document.getElementById('favorite');
-            if (favoriteDiv) {
-                favoriteDiv.innerHTML = `
-                    <h3>Cherished Family Favorites</h3>
-                    ${data.length > 0 ? data.map(fav => `
-                        <div class="favorite-title">
-                            <a href="#${fav.category}">${fav.title}</a>
-                        </div>
-                    `).join('') : '<p>No favorites yet!</p>'}
-                `;
-            } else {
-                console.warn('Favorite div not found in DOM');
-                const cookbookSection = document.getElementById('cookbook');
-                if (cookbookSection) {
-                    cookbookSection.innerHTML += '<div id="favorite"></div>';
-                    renderFavorites(); // Retry rendering
-                }
-            }
-        })
-        .catch(error => console.error('Favorites fetch failed:', error));
+async function renderFavorites() {
+    try {
+        const response = await fetch('http://localhost:3000/favorites');
+        if (!response.ok) throw new Error('Fetch failed');
+        const data = await response.json();
+        console.log('Favorites data:', data);
+        const favoriteDiv = document.getElementById('favorite');
+        if (favoriteDiv) {
+            favoriteDiv.innerHTML = `
+                <h3>Cherished Family Favorites</h3>
+                ${data.length > 0 ? data.map(fav => `
+                    <div class="favorite-title">
+                        <a href="#${fav.category}">${fav.title}</a>
+                    </div>
+                `).join('') : '<p>No favorites yet!</p>'}
+            `;
+        } else {
+            console.warn('Favorite div not found in DOM');
+        }
+    } catch (error) {
+        console.error('Favorites fetch failed:', error.message);
+    }
 }
 
 // Event listener for DOM content loading
@@ -190,13 +175,12 @@ document.addEventListener('DOMContentLoaded', () => {
         ${data.map(item => `<p>${item.content}</p>`).join('')}
     `);
 
-
     // Render Cookbook section with favorites
     fetchAndRender('http://localhost:3000/cookbook', 'cookbook', data => `
         <h2>Curate Your Perfect Cookbook</h2>
         <p>Curate your perfect cookbook with recipes that reflect your journey...</p>
         <div id="favorite"></div>
-    `);
+    `, renderFavorites); // Render favorites after Cookbook
 
     // Initial categories fetch (between Cookbook and Shop)
     fetchInitialData();
@@ -214,15 +198,16 @@ document.addEventListener('DOMContentLoaded', () => {
         <img src="https://i.pinimg.com/736x/67/b4/ae/67b4aeda3d7503ec2f749ffa12608a2c.jpg" alt="Shop decoration 3" class="shop-decoration">
         <img src="https://i.pinimg.com/736x/10/5a/a2/105aa216193627fb6443d2babc457fe4.jpg" alt="Shop decoration 4" class="shop-decoration">
     `);
-    // Render Footer section with styled layout
+
+    // Render Footer section
     const footer = document.getElementById('footer');
     if (footer) {
         footer.innerHTML = `
             <div class="footer-container">
                 <div class="footer-section">
                     <h4>Contact Us</h4>
-                    <p>Email: <a href="mailto:ebrahimmuznah98@gmail.com">ebrahimmuznah98@gmail.com</a></p>
-                    <p>Phone: <a href="tel:+1234567890">+254 114 148 875</a></p>
+                    <p>Email: <a href="mailto:info@dailydelights.com">info@dailydelights.com</a></p>
+                    <p>Phone: <a href="tel:+1234567890">+1 (234) 567-890</a></p>
                 </div>
                 <div class="footer-section sitemap">
                     <h4>Sitemap</h4>
@@ -246,6 +231,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
         console.error('Footer section not found');
     }
+
     // Event listener for favorite heart clicks
     document.addEventListener('click', (e) => {
         if (e.target.classList.contains('favorite-heart')) {
@@ -256,7 +242,4 @@ document.addEventListener('DOMContentLoaded', () => {
             toggleFavorite(recipeId, recipeTitle, category);
         }
     });
-
-    // Initial render of favorites
-    renderFavorites();
 });
