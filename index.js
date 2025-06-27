@@ -1,17 +1,16 @@
-// Select all anchor elements whose href starts with "#" for navigation
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
-    });
-});
-
-// Reusable function to fetch and render data
 function fetchAndRender(url, sectionId, template) {
     fetch(url)
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+            return response.json();
+        })
         .then(data => {
-            document.getElementById(sectionId).innerHTML = template(data);
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.innerHTML = template(data);
+            } else {
+                console.error(`Section with ID ${sectionId} not found`);
+            }
         })
         .catch(error => console.error(`Error fetching ${sectionId} data:`, error));
 }
@@ -33,38 +32,43 @@ let favorites = new Set();
 
 // Fetch initial data and render categories with Foodish
 async function fetchInitialData() {
-    const categoriesData = await fetch('http://localhost:3000/categories').then(res => res.json());
+    const categoriesData = await fetch('http://localhost:3000/categories').then(res => res.json()).catch(() => []);
     const imageUrl = await fetchFoodishImage();
-    document.getElementById('categories').innerHTML = `
-        <h2>Dive into the World of Flavors</h2>
-        <p>Dive into the world of flavors with our diverse categories...</p>
-        <div id="foodish-content">
-            <h3>Food Inspiration</h3>
-            <img src="${imageUrl}" alt="Random food image" class="foodish-image">
-            <button id="refresh-foodish">Refresh Image</button>
-        </div>
-        ${categoriesData.map(category => `
-            <div id="${category.category}">
-                <h4>${category.title}</h4>
-                <p>${category.description}</p>
-                ${category.recipes.map(recipe => `
-                    <div class="recipe" style="display: block;">
-                        <h4>${recipe.title}</h4>
-                        <p>${recipe.description}</p>
-                        <h5>Ingredients</h5>
-                        <ul>${recipe.ingredients.map(ingredient => `<li>${ingredient}</li>`).join('')}</ul>
-                        <h5>Instructions</h5>
-                        <ol>${recipe.instructions.map(instruction => `<li>${instruction}</li>`).join('')}</ol>
-                        <p><strong>Prep Time:</strong> ${recipe.prepTime} | <strong>Cook Time:</strong> ${recipe.cookTime} | <strong>Servings:</strong> ${recipe.servings}</p>
-                        <p><em>Tip:</em> ${recipe.tip}</p>
-                        <span class="favorite-heart" data-recipe-id="${recipe.id}" style="cursor: pointer; font-size: 24px; color: black;" role="button" aria-label="Toggle favorite for ${recipe.title}">♥</span>
-                    </div>
-                `).join('')}
+    const categoriesSection = document.getElementById('categories');
+    if (categoriesSection) {
+        categoriesSection.innerHTML = categoriesData.length ? `
+            <h2>Dive into the World of Flavors</h2>
+            <p>Dive into the world of flavors with our diverse categories...</p>
+            <div id="foodish-content">
+                <h3>Food Inspiration</h3>
+                <img src="${imageUrl}" alt="Random food image" class="foodish-image">
+                <button id="refresh-foodish">Refresh Image</button>
             </div>
-        `).join('')}
-        <input type="text" id="recipeSearch" placeholder="Search recipes...">
-        <button id="darkMode">Toggle Dark Mode</button>
-    `;
+            ${categoriesData.map(category => `
+                <div id="${category.category}">
+                    <h4>${category.title}</h4>
+                    <p>${category.description}</p>
+                    ${category.recipes.map(recipe => `
+                        <div class="recipe" style="display: block;">
+                            <h4>${recipe.title}</h4>
+                            <p>${recipe.description}</p>
+                            <h5>Ingredients</h5>
+                            <ul>${recipe.ingredients.map(ingredient => `<li>${ingredient}</li>`).join('')}</ul>
+                            <h5>Instructions</h5>
+                            <ol>${recipe.instructions.map(instruction => `<li>${instruction}</li>`).join('')}</ol>
+                            <p><strong>Prep Time:</strong> ${recipe.prepTime} | <strong>Cook Time:</strong> ${recipe.cookTime} | <strong>Servings:</strong> ${recipe.servings}</p>
+                            <p><em>Tip:</em> ${recipe.tip}</p>
+                            <span class="favorite-heart" data-recipe-id="${recipe.id}" style="cursor: pointer; font-size: 24px; color: black;" role="button" aria-label="Toggle favorite for ${recipe.title}">♥</span>
+                        </div>
+                    `).join('')}
+                </div>
+            `).join('')}
+            <input type="text" id="recipeSearch" placeholder="Search recipes...">
+            <button id="darkMode">Toggle Dark Mode</button>
+        ` : '<p>No categories data available. Check the server.</p>';
+    } else {
+        console.error('Categories section not found');
+    }
 
     // Attach event listeners after rendering
     const darkModeButton = document.getElementById('darkMode');
@@ -131,17 +135,30 @@ function toggleFavorite(recipeId, recipeTitle, category) {
 // Render favorites in cookbook
 function renderFavorites() {
     fetch('http://localhost:3000/favorites')
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) throw new Error('Network response was not ok');
+            return response.json();
+        })
         .then(data => {
             console.log('Favorites data:', data); // Debug log
-            document.getElementById('favorite').innerHTML = `
-                <h3>Cherished Family Favorites</h3>
-                ${data.length > 0 ? data.map(fav => `
-                    <div class="favorite-title">
-                        <a href="#${fav.category}">${fav.title}</a>
-                    </div>
-                `).join('') : '<p>No favorites yet!</p>'}
-            `;
+            const favoriteDiv = document.getElementById('favorite');
+            if (favoriteDiv) {
+                favoriteDiv.innerHTML = `
+                    <h3>Cherished Family Favorites</h3>
+                    ${data.length > 0 ? data.map(fav => `
+                        <div class="favorite-title">
+                            <a href="#${fav.category}">${fav.title}</a>
+                        </div>
+                    `).join('') : '<p>No favorites yet!</p>'}
+                `;
+            } else {
+                console.warn('Favorite div not found in DOM');
+                const cookbookSection = document.getElementById('cookbook');
+                if (cookbookSection) {
+                    cookbookSection.innerHTML += '<div id="favorite"></div>';
+                    renderFavorites(); // Retry rendering
+                }
+            }
         })
         .catch(error => console.error('Favorites fetch failed:', error));
 }
@@ -173,8 +190,6 @@ document.addEventListener('DOMContentLoaded', () => {
         ${data.map(item => `<p>${item.content}</p>`).join('')}
     `);
 
-    // Initial categories fetch
-    fetchInitialData();
 
     // Render Cookbook section with favorites
     fetchAndRender('http://localhost:3000/cookbook', 'cookbook', data => `
@@ -183,7 +198,10 @@ document.addEventListener('DOMContentLoaded', () => {
         <div id="favorite"></div>
     `);
 
-    // Render Shop section with decoration images
+    // Initial categories fetch (between Cookbook and Shop)
+    fetchInitialData();
+
+    // Render Shop section
     fetchAndRender('http://localhost:3000/shop', 'shop', data => `
         <h2>Discover Our Kitchen Goodies</h2>
         <p>${data[0].description}</p>
@@ -192,22 +210,42 @@ document.addEventListener('DOMContentLoaded', () => {
                 <li><strong>${item.name}</strong> - $${item.price}<p>${item.description}</p></li>
             `).join('')}
         </ul>
-        <img src="https://i.pinimg.com/736x/0f/64/8a/0f648a264b8179e13a7c6ff540da4e4f.jpg" alt="Shop decoration 1" class="shop-decoration">
-        <img src="https://i.pinimg.com/736x/fd/11/42/fd1142f40a8eee585a2cb36b94569f3e.jpg" alt="Shop decoration 2" class="shop-decoration" style="margin-top: 20px;">
-        <img src="https://i.pinimg.com/736x/67/b4/ae/67b4aeda3d7503ec2f749ffa12608a2c.jpg" alt="Shop decoration 3" class="shop-decoration" style="margin-top: 20px;">
-        <img src="https://i.pinimg.com/736x/10/5a/a2/105aa216193627fb6443d2babc457fe4.jpg" alt="Shop decoration 4" class="shop-decoration" style="margin-top: 20px;">
-        <img src="https://i.pinimg.com/736x/ef/3e/f6/ef3ef67da030a98f7fa7f7aee19c2bbf.jpg" alt="Shop decoration 4" class="shop-decoration" style="margin-top: 20px;">
+        <img src="https://i.pinimg.com/736x/fd/11/42/fd1142f40a8eee585a2cb36b94569f3e.jpg" alt="Shop decoration 2" class="shop-decoration">
+        <img src="https://i.pinimg.com/736x/67/b4/ae/67b4aeda3d7503ec2f749ffa12608a2c.jpg" alt="Shop decoration 3" class="shop-decoration">
+        <img src="https://i.pinimg.com/736x/10/5a/a2/105aa216193627fb6443d2babc457fe4.jpg" alt="Shop decoration 4" class="shop-decoration">
     `);
-
-    // Render Footer section with Contact Us 
-    document.getElementById('footer').innerHTML = `
-        <div class="contact-us">
-            <h4>Contact Us</h4>
-            <p>Phone: +254 114 148 875</p>
-            <p>Email: <a href="mailto:ebrahimmuznah98@gmail.com">ebrahimmuznah98@gmail.com</a></p>
-        </div>
-    `;
-
+    // Render Footer section with styled layout
+    const footer = document.getElementById('footer');
+    if (footer) {
+        footer.innerHTML = `
+            <div class="footer-container">
+                <div class="footer-section">
+                    <h4>Contact Us</h4>
+                    <p>Email: <a href="mailto:ebrahimmuznah98@gmail.com">ebrahimmuznah98@gmail.com</a></p>
+                    <p>Phone: <a href="tel:+1234567890">+254 114 148 875</a></p>
+                </div>
+                <div class="footer-section sitemap">
+                    <h4>Sitemap</h4>
+                    <ul>
+                        <li><a href="#">Ingredients</a></li>
+                        <li><a href="#">Recipes</a></li>
+                        <li><a href="#">Expert Advice</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section social">
+                    <h4>Follow Us</h4>
+                    <div class="social-icons">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <p class="copyright">© 2025 Daily Delights. All rights reserved.</p>
+        `;
+    } else {
+        console.error('Footer section not found');
+    }
     // Event listener for favorite heart clicks
     document.addEventListener('click', (e) => {
         if (e.target.classList.contains('favorite-heart')) {
