@@ -5,23 +5,37 @@
     box-sizing: border-box;
 }
 
-/* Body styling for global dark mode */
+/* Body styling for global layout with gradient background */
 body {
-    background-color: #fff;
+    background: linear-gradient(135deg, #f5e8c7, #e0e0e0); /* Subtle gradient background */
+    position: relative;
     color: #333;
-    transition: background-color 0.3s, color 0.3s;
-    display: flex;
+    transition: background 0.3s, color 0.3s;
     min-height: 100vh;
-    flex-wrap: wrap;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Overlay for depth (optional) */
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.1); /* Very light overlay */
+    z-index: -1;
 }
 
 .dark-mode {
-    background-color: #1a1a1a; /* Darker background for whole page */
-    color: #e0e0e0; /* Light text for visibility */
+    background: linear-gradient(135deg, #2a2a2a, #404040); /* Dark mode gradient */
+    color: #e0e0e0;
 }
 
 .dark-mode a {
-    color: #a5d6a7; /* Ensure links are visible */
+    color: #a5d6a7;
 }
 
 .dark-mode a:hover {
@@ -41,6 +55,7 @@ body {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     transition: background-color 0.3s;
     width: 100%;
+    max-width: 1200px;
 }
 
 .dark-mode .header_container {
@@ -50,15 +65,15 @@ body {
 .header_container h1 {
     margin: 0;
     color: white;
-    font-family: 'Great Vibes', cursive; /* Cursive font */
-    font-size: 36px; /* Larger size */
-    font-weight: bold; /* Bold */
-    text-decoration: underline; /* Underlined */
+    font-family: 'Great Vibes', cursive;
+    font-size: 36px;
+    font-weight: bold;
+    text-decoration: underline;
     padding-left: 20px;
 }
 
 .dark-mode .header_container h1 {
-    color: #e0e0e0; /* Visible in dark mode */
+    color: #e0e0e0;
 }
 
 /* Navigation styling */
@@ -131,125 +146,85 @@ nav ul li a:hover {
     background-color: #444;
 }
 
-/* Main section styling (left side) */
+/* Main content styling */
 main {
+    flex: 1;
+    width: 100%;
+    max-width: 1200px;
     padding: 20px;
-    flex: 1 1 65%; /* More space for left content */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 section {
     margin: 20px 0;
     border: 1px solid #ddd;
     border-radius: 5px;
-    background-color: #fff;
+    background-color: rgba(255, 255, 255, 0.8);
     animation: fadeIn 0.5s ease-in;
-    color: #333; /* Default text color */
-    position: relative; /* For height reference */
+    color: #333;
+    position: relative;
+    max-width: 1000px;
+    width: 100%;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Card-like shadow */
 }
 
 .dark-mode section {
     border-color: #444;
-    background-color: #2a2a2a;
-    color: #e0e0e0; /* Visible text in dark mode */
+    background-color: rgba(42, 42, 42, 0.8);
+    color: #e0e0e0;
 }
 
-/* Learning content styling */
-.learning-content {
-    background-color: #f0f0f0;
-    padding: 15px;
-    margin-top: 10px;
-    border-radius: 5px;
-}
-
-.dark-mode .learning-content {
-    background-color: #333;
-}
-
-.learning-content h3 {
-    color: #4CAF50;
-    margin-bottom: 10px;
-}
-
-.dark-mode .learning-content h3 {
-    color: #81c784;
-}
-
-.learning-content ul {
-    list-style-type: disc;
-    margin-left: 20px;
-    margin-top: 10px;
-}
-
-.learning-content a {
-    color: #388E3C;
-    text-decoration: none;
-}
-
-.dark-mode .learning-content a {
-    color: #a5d6a7;
-}
-
-.learning-content a:hover {
-    text-decoration: underline;
-}
-
-/* Recipe and category title styling */
-h2, h4 {
-    font-family: 'Times New Roman', Times, serif; /* Times New Roman font */
-    font-weight: bold; /* Bold */
-    text-decoration: underline; /* Underlined */
-    margin-bottom: 10px; /* Space from description */
-}
-
-.dark-mode h2, .dark-mode h4 {
-    color: #e0e0e0; /* Visible in dark mode */
-}
-
-/* Recipe styling (right side) */
+/* Categories styling */
 #categories {
-    flex: 1 1 35%; /* Right side for categories and controls */
+    width: 100%;
+    max-width: 1200px;
     padding: 20px;
-    background-color: #f9f9f9;
+    background-color: rgba(249, 249, 249, 0.8);
     border-radius: 5px;
-    min-height: 100vh;
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 
 .dark-mode #categories {
-    background-color: #2a2a2a;
-    color: #e0e0e0; /* Visible text */
+    background-color: rgba(42, 42, 42, 0.8);
+    color: #e0e0e0;
 }
 
 .recipe {
     margin: 20px 0;
     padding: 15px;
-    background-color: #fff;
+    background-color: rgba(255, 255, 255, 0.8);
     border-radius: 5px;
-    text-align: center;
     position: relative;
-    display: block; /* Ensure recipes don't collapse */
+    display: block;
+    max-width: 900px;
+    width: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Card effect */
 }
 
 .dark-mode .recipe {
-    background-color: #333;
-    color: #e0e0e0; /* Visible text */
+    background-color: rgba(51, 51, 51, 0.8);
+    color: #e0e0e0;
 }
 
 .recipe h4 {
-    color: #4CAF50;
-    margin-top: 0;
-    margin-bottom: 10px;
+    color: #388E3C; /* Eye-catching green for titles */
+    margin-bottom: 15px; /* Increased spacing after title */
 }
 
 .dark-mode .recipe h4 {
-    color: #81c784;
+    color: #81c784; /* Adjusted for dark mode */
 }
 
 .recipe h5 {
     font-size: 1.1em;
-    margin-top: 10px;
+    margin: 15px 0 10px; /* Spacing before and after headings */
     color: #333;
+    text-align: left; /* Align headings to left */
 }
 
 .dark-mode .recipe h5 {
@@ -257,13 +232,17 @@ h2, h4 {
 }
 
 .recipe ul, .recipe ol {
-    margin-left: 20px;
-    text-align: left;
-    margin-bottom: 10px;
+    margin: 0 0 15px 20px; /* Left-aligned list with spacing */
+    text-align: left; /* Align list items to left */
 }
 
 .recipe li {
     margin: 5px 0;
+}
+
+.recipe p {
+    margin: 10px 0; /* Spacing after paragraphs */
+    text-align: left; /* Align paragraphs to left */
 }
 
 .recipe p strong {
@@ -291,13 +270,15 @@ h2, h4 {
 .favorite-title {
     margin: 10px 0;
     padding: 5px 10px;
-    background-color: #f0f0f0;
+    background-color: rgba(240, 240, 240, 0.8);
     border-radius: 5px;
     display: inline-block;
+    max-width: 900px;
+    width: 100%;
 }
 
 .dark-mode .favorite-title {
-    background-color: #444;
+    background-color: rgba(68, 68, 68, 0.8);
     color: #e0e0e0;
 }
 
@@ -325,12 +306,15 @@ h2, h4 {
 #shop li {
     margin: 10px 0;
     padding: 10px;
-    background-color: #f0f0f0;
+    background-color: rgba(240, 240, 240, 0.8);
     border-radius: 5px;
+    max-width: 900px;
+    width: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .dark-mode #shop li {
-    background-color: #333;
+    background-color: rgba(51, 51, 51, 0.8);
     color: #e0e0e0;
 }
 
@@ -374,6 +358,9 @@ h2, h4 {
     border-radius: 5px;
     font-size: 14px;
     color: #333;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .dark-mode #recipeSearch {
@@ -391,6 +378,9 @@ h2, h4 {
     cursor: pointer;
     transition: background-color 0.3s;
     margin-top: 10px;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #darkMode:hover {
@@ -407,73 +397,108 @@ h2, h4 {
 
 /* Shop decoration image styling */
 .shop-decoration {
-    width: 100%; /* Full width of the section */
-    height: 50%; /* Half the height of the section */
-    max-height: 300px; /* Cap to prevent excessive growth */
-    object-fit: cover; /* Maintain aspect ratio */
-    border: 2px solid #4CAF50; /* Border */
+    width: 100%;
+    height: 50%;
+    max-height: 300px;
+    object-fit: cover;
+    border: 2px solid #4CAF50;
     border-radius: 5px;
-    margin: 20px auto; /* Center and add space */
+    margin: 20px auto;
     display: block;
+    max-width: 900px;
 }
 
 .dark-mode .shop-decoration {
-    border-color: #81c784; /* Visible border in dark mode */
+    border-color: #81c784;
 }
 
-/* Footer styling*/
+/* Footer styling */
 #footer {
-    background-color: white;
-    color: black;
+    background-color: #1a1a1a;
+    color: #ffffff;
     text-align: center;
-    padding: 50px 0;
+    padding: 40px 20px;
     margin: 0 auto;
-    width: 250px;
-    font-family: 'Arial', sans-serif;
-    font-size: 14px;
-    border: none; 
-    background-image: none; 
+    width: 100%;
+    max-width: 1200px;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.dark-mode #footer {
-    background-color: white; 
-    color: black;
+.footer-container {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    max-width: 800px;
+    margin-bottom: 20px;
 }
 
-#footer .contact-us {
-    max-width: 600px;
-    margin: auto;
-    padding: 20px;
+.footer-section {
+    text-align: center;
 }
 
-#footer .contact-us h4 {
-    font-size: 18px;
-    margin-bottom: 10px;
+.footer-section h4 {
+    margin-bottom: 15px;
+    color: #4CAF50;
+    font-size: 1.2em;
     font-weight: bold;
 }
 
-#footer .contact-us p {
+.footer-section p, .footer-section ul {
     margin: 5px 0;
-    color: #0a0a0a;
 }
 
-.dark-mode #footer .contact-us p {
-    color: black;
-}
-
-#footer .contact-us a {
-    color: black;
+.footer-section a {
+    color: #ffffff;
     text-decoration: none;
 }
-
-.dark-mode #footer .contact-us  h4 {
-    color: rgb(36, 131, 36);
-}
-
-#footer .contact-us a:hover {
+.footer-section a:hover {
+    color: #4CAF50;
     text-decoration: underline;
 }
+.sitemap ul {
+    list-style: none;
+    padding: 0;
+}
+.sitemap li {
+    margin: 10px 0;
+}
+.social-icons {
+    margin-top: 10px;
+}
 
+.social-icons a {
+    margin: 0 10px;
+    font-size: 1.5em;
+    color: #ffffff;
+    transition: color 0.3s;
+}
+
+.social-icons a:hover {
+    color: #4CAF50;
+}
+
+.copyright {
+    font-size: 0.9em;
+    color: #bbbbbb;
+    margin-top: 15px;
+}
+/* Responsive design */
+@media (max-width: 600px) {
+    .footer-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    .footer-section {
+        margin: 15px 0;
+    }
+    .social-icons a {
+        margin: 0 5px;
+    }
+}
+/* Responsive design */
 @media (max-width: 600px) {
     body {
         flex-direction: column;
@@ -499,20 +524,13 @@ h2, h4 {
         width: 100%;
         box-shadow: none;
     }
-    main {
-        flex: 1 1 100%;
-    }
-    #categories {
-        flex: 1 1 100%;
-        min-height: auto;
-        margin: 10px 0;
-    }
-    .shop-decoration {
-        height: 40%; /* Slightly less on mobile for balance */
-        max-height: 200px; /* Adjusted cap for mobile */
+    main, #categories, section, .recipe, .learning-content, #shop li {
+        max-width: 100%;
+        padding: 15px;
     }
     #footer {
         padding: 15px 0;
+        width: 100%;
     }
 }
 
