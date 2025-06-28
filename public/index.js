@@ -34,7 +34,7 @@ let favorites = new Set();
 
 // Fetch initial data and render categories with Foodish
 async function fetchInitialData() {
-    const categoriesData = await fetch('http://localhost:3000/categories')
+    const categoriesData = await fetch('https://daily-delights-website.onrender.com/categories')
         .then(res => res.json())
         .catch(() => []);
     const imageUrl = await fetchFoodishImage();
@@ -102,12 +102,12 @@ async function toggleFavorite(recipeId, recipeTitle, category) {
     try {
         if (isFavorite) {
             favorites.delete(recipeId);
-            const response = await fetch(`http://localhost:3000/favorites/${recipeId}`, { method: 'DELETE' });
+            const response = await fetch(`https://daily-delights-website.onrender.com/favorites/${recipeId}`, { method: 'DELETE' });
             if (!response.ok) throw new Error('Delete failed');
             console.log('Favorite deleted:', recipeId);
         } else {
             favorites.add(recipeId);
-            const response = await fetch('http://localhost:3000/favorites', {
+            const response = await fetch('https://daily-delights-website.onrender.com/favorites', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ id: recipeId, title: recipeTitle, category: category }),
@@ -126,7 +126,7 @@ async function toggleFavorite(recipeId, recipeTitle, category) {
 // Render favorites in cookbook
 async function renderFavorites() {
     try {
-        const response = await fetch('http://localhost:3000/favorites');
+        const response = await fetch('https://daily-delights-website.onrender.com/favorites');
         if (!response.ok) throw new Error('Fetch failed');
         const data = await response.json();
         console.log('Favorites data:', data);
@@ -151,7 +151,7 @@ async function renderFavorites() {
 // Event listener for DOM content loading
 document.addEventListener('DOMContentLoaded', () => {
     // Render Home section
-    fetchAndRender('http://localhost:3000/learning', 'home', data => `
+    fetchAndRender('https://daily-delights-website.onrender.com/learning', 'home', data => `
         <h2>Savor the Magic of Everyday Meals</h2>
         <p>Unleash your inner chef with recipes and tips...</p>
         <div class="learning-content">
@@ -170,13 +170,13 @@ document.addEventListener('DOMContentLoaded', () => {
     `);
 
     // Render About section
-    fetchAndRender('http://localhost:3000/about', 'about', data => `
+    fetchAndRender('https://daily-delights-website.onrender.com/about', 'about', data => `
         <h2>Our Story: Crafting Daily Delights</h2>
         ${data.map(item => `<p>${item.content}</p>`).join('')}
     `);
 
     // Render Cookbook section with favorites
-    fetchAndRender('http://localhost:3000/cookbook', 'cookbook', data => `
+    fetchAndRender('https://daily-delights-website.onrender.com/cookbook', 'cookbook', data => `
         <h2>Curate Your Perfect Cookbook</h2>
         <p>Curate your perfect cookbook with recipes that reflect your journey...</p>
         <div id="favorite"></div>
@@ -186,7 +186,7 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchInitialData();
 
     // Render Shop section
-    fetchAndRender('http://localhost:3000/shop', 'shop', data => `
+    fetchAndRender('https://daily-delights-website.onrender.com/shop', 'shop', data => `
         <h2>Discover Our Kitchen Goodies</h2>
         <p>${data[0].description}</p>
         <ul>

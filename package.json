@@ -1,0 +1,24 @@
+{
+  "name": "phase1-main-project",
+  "version": "1.0.0",
+  "description": "## DESCRIPTION This project is a client-side recipe management application designed to help users explore, curate, and enjoy a variety of culinary delights. It offers an inviting interface to view detailed recipes, toggle favorites, and discover cooking tips, all powered by a local `json-server` to simulate a backend API. This setup allows for easy testing and demonstration of front-end interactions without requiring a full server infrastructure.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "json-server --watch db.json --port 3000"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Muzna-ebrahim/Daily-Delights-Website.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Muzna-ebrahim/Daily-Delights-Website/issues"
+  },
+  "homepage": "https://github.com/Muzna-ebrahim/Daily-Delights-Website#readme",
+  "dependencies": {
+    "json-server": "^1.0.0-beta.3"
+  }
+}
